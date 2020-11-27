@@ -9,15 +9,15 @@
 
                 <div class="card-body">
                 <form action="{{ route('discussion.store') }}" method="POST">
-                    
+
                     @csrf
 
                     <div class="form-group">
 
                         <label for="title">Title</label>
 
-                        <input type="text" class="form-control" name="Title" value=""> 
-                    </div>  
+                        <input type="text" class="form-control" name="title" value="">
+                    </div>
 
                     <div class="form-group">
 
@@ -27,13 +27,13 @@
                             <trix-editor input="content"></trix-editor>
 
 
-                         </div>   
+                         </div>
 
                     <div class="form-group">
 
                         <label for="channel">Channel</label>
 
-                        <select name="channel" id="channel" class="form-control">
+                        <select name="channel_id" id="channel" class="form-control">
                             @foreach($channels as $channel)
                                 <option value="{{ $channel->id }}">{{ $channel->name }}</option>
                             @endforeach

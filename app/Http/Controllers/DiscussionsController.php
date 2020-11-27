@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Discussion;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateDiscussionRequest;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Str;
 
 class DiscussionsController extends Controller
 {
 
-   public function __construct(){
+    public function __construct()
+    {
 
         $this->middleware('auth')->only(['create', 'store']);
     }
-
-
-
 
 
     /**
@@ -25,7 +26,7 @@ class DiscussionsController extends Controller
     public function index()
     {
         return view('discussions.index', [
-           'discussions' => Discussion::paginate(5)
+            'discussions' => Discussion::paginate(3)
         ]);
     }
 
@@ -37,33 +38,33 @@ class DiscussionsController extends Controller
     public function create()
     {
         return view('discussions.create');
-    
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateDiscussionRequest $request)
     {
-       Discussion::create([
-
-           'title' => $request->title,
-           'slug' => str::slug($request->title),
-           'content' => $request->content,
-           'channel_id' => $request->channel
-       ]); 
+        Discussion::create([
+            'title' => $request->title,
+            'slug' => str::slug($request->title),
+            'content' => $request->get('content'),
+            'channel_id' => $request->channel_id,
+            'user_id' => auth()->id()
+        ]);
 
         session()->flash('success', 'Discussion Posted!');
-        return Route::redirect('create.blade.php', 'index.blade.php');
+        return redirect('discussion.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -74,7 +75,7 @@ class DiscussionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -85,8 +86,8 @@ class DiscussionsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -97,7 +98,7 @@ class DiscussionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -27,6 +27,6 @@ class AppServiceProvider extends ServiceProvider
     {
        View::share('channels', Channel::all());
 
-    
+
     }
 }
