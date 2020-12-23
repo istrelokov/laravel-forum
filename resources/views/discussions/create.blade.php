@@ -8,7 +8,7 @@
                 <div class="card-header">Add Discussion</div>
 
                 <div class="card-body">
-                <form action="{{ route('discussion.store') }}" method="POST">
+                <form action="{{ route('discussions.store') }}" method="POST">
 
                     @csrf
 
@@ -50,14 +50,17 @@
 @section('css')
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.0/trix.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 @endsection
 
 @section('js')
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.0/trix.js">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.0/trix.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script> flatpickr('#created_at', {enableTime: true}) </script>
 
 
-</script>
+
 
 @endsection
