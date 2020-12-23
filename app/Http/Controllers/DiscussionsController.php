@@ -105,6 +105,6 @@ class DiscussionsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }
